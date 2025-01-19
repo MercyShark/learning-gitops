@@ -58,7 +58,6 @@ jobs:
         run: | 
             git clone https://github.com/MercyShark/infra-repo.git
             cd infra-repo
-            git config user.name "Github Actions"
 
       - name: Update Docker Image tag in infra rep depl file
         run: |
@@ -67,4 +66,4 @@ jobs:
           sed -i "s|image: .*|image: ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.tag }}|" depl.yaml
           git add .
           git commit -m "Updated docker image tag to ${{ env.tag }}"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/MercyShark>/infra-repo.git
+          git push https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/MercyShark>/infra-repo.git
