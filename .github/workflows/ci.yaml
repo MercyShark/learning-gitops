@@ -28,6 +28,13 @@ jobs:
             ls -a
             echo "tag=$(date +%Y%m%d)-${{ github.sha }}" >> $GITHUB_ENV
             printenv
+            echo "*************"
+            echo $GITHUB_ENV
+            echo "0000000"
+            echo $github
+            echo $github.sha
+            echo $env
+            echo $env.tag
                 
      
 
