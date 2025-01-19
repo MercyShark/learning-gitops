@@ -31,6 +31,7 @@ jobs:
   building:
     runs-on: ubuntu-latest
     needs: test  # This job runs only after 'test' job completes successfully
+    environment: production
     if: success() 
     steps:
       - name: Checkout Code
