@@ -57,6 +57,8 @@ jobs:
       - name: Clone the Infra repo
         run: | 
             git clone https://github.com/MercyShark/infra-repo.git
+            git config --global user.email "prajapatirishabh04@gmail.com"
+            git config --global user.name "GITHUB ACTIONS"
             cd infra-repo
 
       - name: Update Docker Image tag in infra rep depl file
