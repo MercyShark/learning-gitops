@@ -62,6 +62,8 @@ jobs:
 
       - name: Update Docker Image tag in infra rep depl file
         run: |
+          ls
+          cd infra-repo
           sed -i "s|image: .*|image: ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.tag }}|" depl.yaml
           git add .
           git commit -m "Updated docker image tag to ${{ env.tag }}"
