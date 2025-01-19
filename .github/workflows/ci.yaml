@@ -33,6 +33,8 @@ jobs:
     needs: test  # This job runs only after 'test' job completes successfully
     environment: production
     if: success() 
+    env:
+      IMAGE_NAME: fastapi-sample-image
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -49,5 +51,17 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/fastapi-sample-image:${{ env.tag }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-sample-image:${{ env.tag }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.tag }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.tag }}
+
+      - name: Clone the Infra repo
+        run: | 
+            git clone https://github.com/MercyShark/infra-repo.git
+            git config user.name "Github Actions"
+
+      - name: Update Docker Image tag in infra rep depl file
+        run: |
+          sed -i "s|image: .*|image: ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.tag }}|" depl.yaml
+          git add .
+          git commit -m "Updated docker image tag to ${{ env.tag }}"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/MercyShark>/infra-repo.git
