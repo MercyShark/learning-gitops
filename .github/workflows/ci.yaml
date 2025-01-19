@@ -57,6 +57,7 @@ jobs:
       - name: Clone the Infra repo
         run: | 
             git clone https://github.com/MercyShark/infra-repo.git
+            cd infra-repo
             git config user.name "Github Actions"
 
       - name: Update Docker Image tag in infra rep depl file
